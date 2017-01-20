@@ -93,4 +93,6 @@
     <string name="search_input_hint">aaaaa</string>
     <string name="search_button_text">bbbbb</string>
     <string name="title_activity_result">ResultActivity</string>
+    <string name="select_city">city</string>
+    <string name="type_code">city</string>
 </resources>

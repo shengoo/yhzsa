@@ -10,12 +10,35 @@
     android:dividerPadding="@dimen/common_margin"
     tools:showIn="@layout/activity_main">
 
-        <EditText
-            android:id="@+id/input_query"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/select_city"/>
+        <Spinner
+            android:id="@+id/planets_spinner"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/search_input_hint"
-            android:textAlignment="center"/>
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/type_code"/>
+            <EditText
+                android:id="@+id/input_query"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_input_hint"/>
+        </LinearLayout>
         <Button
             android:id="@+id/button_search"
             android:text="@string/search_button_text"
