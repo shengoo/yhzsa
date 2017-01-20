@@ -1,17 +1,25 @@
 package com.sheng00.yhzs;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,12 +30,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText textQuery = (EditText) findViewById(R.id.input_query);
+
+        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
+
+
+        final EditText textQuery = (EditText) findViewById(R.id.input_query);
         Button buttonSearch = (Button) findViewById(R.id.button_search);
         buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String searchString = textQuery.getText().toString();
+                if(searchString.length()<=1){
+                    Toast.makeText(getApplicationContext(),"Please input.",Toast.LENGTH_LONG).show();
+                    textQuery.requestFocus();
+                }else {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context,ResultActivity.class);
+                    intent.putExtra("searchString",searchString);
+                    context.startActivity(intent);
+                }
             }
         });
 
@@ -52,7 +73,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        // set 50% height
+        ViewGroup.LayoutParams params = appBarLayout.getLayoutParams();
+        // Changes the height and width to the specified *pixels*
+        params.height = getApplicationContext().getResources().getDisplayMetrics().heightPixels/2;
+        appBarLayout.setLayoutParams(params);
 
+
+        swipeContainer.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //Your refresh code here
+                swipeContainer.setRefreshing(false);
+            }
+        });
     }
 
     @Override
