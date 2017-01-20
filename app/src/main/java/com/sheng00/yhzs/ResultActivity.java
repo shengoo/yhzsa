@@ -30,8 +30,9 @@ public class ResultActivity extends BaseActivity {
 
 
         Intent intent = getIntent();
-        String searchString = intent.getStringExtra("searchString");
-        Toast.makeText(getApplicationContext(),searchString,Toast.LENGTH_LONG).show();
+        String searchString = intent.getStringExtra(Constants.SEARCH_STRING);
+        String city = intent.getStringExtra(Constants.CITY_PREFIX);
+        Toast.makeText(getApplicationContext(),searchString + " " + city,Toast.LENGTH_LONG).show();
 
     }
 

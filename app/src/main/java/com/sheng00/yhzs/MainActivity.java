@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.sheng00.yhzs.services.SearchService;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -32,14 +34,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
-// Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.planets_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        final Spinner spinner = (Spinner) findViewById(R.id.planets_spinner);
+
 
 
         final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout)findViewById(R.id.swipe_container);
@@ -57,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     Context context = view.getContext();
                     Intent intent = new Intent(context,ResultActivity.class);
-                    intent.putExtra("searchString",searchString);
+                    intent.putExtra(Constants.SEARCH_STRING,searchString);
+                    intent.putExtra(Constants.CITY_PREFIX,getResources().getStringArray(R.array.cities)[spinner.getSelectedItemPosition()]);
                     context.startActivity(intent);
                 }
             }
@@ -99,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 swipeContainer.setRefreshing(false);
             }
         });
+
+
+        SearchService searchService = new SearchService(getApplicationContext());
+        searchService.test();
     }
 
     @Override
